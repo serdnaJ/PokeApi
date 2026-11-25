@@ -5,8 +5,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Registro del cliente HTTP tipado para la PokéAPI.
-// IHttpClientFactory gestiona el ciclo de vida de las conexiones y
-// le entrega a PokeApiService un HttpClient ya configurado.
 builder.Services.AddHttpClient<PokeApiService>(client =>
 {
     var baseUrl = builder.Configuration["PokeApi:BaseUrl"] ?? "https://pokeapi.co/api/v2/";

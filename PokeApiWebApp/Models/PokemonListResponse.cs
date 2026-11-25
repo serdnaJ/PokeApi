@@ -2,9 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace PokeApiWebApp.Models
 {
-    /// <summary>
-    /// Respuesta de GET /pokemon?offset=0&amp;limit=20 (listado paginado).
-    /// </summary>
+    //listado
     public class PokemonListResponse
     {
         [JsonPropertyName("count")]

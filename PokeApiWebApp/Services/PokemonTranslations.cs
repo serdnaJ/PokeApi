@@ -1,9 +1,8 @@
 namespace PokeApiWebApp.Services
 {
-    /// <summary>
+   
     /// La PokéAPI devuelve los nombres de tipos y estadísticas en inglés.
     /// Esta clase los traduce al español y asigna un color a cada tipo.
-    /// </summary>
     public static class PokemonTranslations
     {
         private static readonly Dictionary<string, (string Nombre, string Color)> Tipos = new()

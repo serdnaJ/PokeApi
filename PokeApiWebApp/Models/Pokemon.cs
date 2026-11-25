@@ -2,10 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace PokeApiWebApp.Models
 {
-    /// <summary>
-    /// Respuesta de GET /pokemon/{nombre o id}.
-    /// Solo se mapean los campos que la aplicación muestra; el resto del JSON se ignora.
-    /// </summary>
+    //mapear los campos
     public class Pokemon
     {
         [JsonPropertyName("id")]
@@ -14,11 +11,11 @@ namespace PokeApiWebApp.Models
         [JsonPropertyName("name")]
         public string Name { get; set; } = string.Empty;
 
-        /// <summary>Altura en decímetros.</summary>
+        /// Altura
         [JsonPropertyName("height")]
         public int Height { get; set; }
 
-        /// <summary>Peso en hectogramos.</summary>
+        /// Peso
         [JsonPropertyName("weight")]
         public int Weight { get; set; }
 

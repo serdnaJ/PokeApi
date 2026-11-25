@@ -2,10 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace PokeApiWebApp.Models
 {
-    /// <summary>
-    /// Respuesta de GET /pokemon-species/{id}. Se usa para obtener
-    /// la descripción de la Pokédex en español.
-    /// </summary>
+   //descripcion de pokemon
     public class PokemonSpecies
     {
         [JsonPropertyName("flavor_text_entries")]

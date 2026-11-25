@@ -11,14 +11,14 @@ namespace PokeApiWebApp.Controllers
         private readonly PokeApiService _service;
         private readonly ILogger<PokemonController> _logger;
 
-        // El servicio llega por inyección de dependencias (registrado en Program.cs)
+        // El servicio de pokemon
         public PokemonController(PokeApiService service, ILogger<PokemonController> logger)
         {
             _service = service;
             _logger = logger;
         }
 
-        // GET /Pokemon?page=1
+        // GET /Pokemon
         public async Task<IActionResult> Index(int page = 1)
         {
             if (page < 1) page = 1;
@@ -44,7 +44,7 @@ namespace PokeApiWebApp.Controllers
             }
         }
 
-        // GET /Pokemon/Details/pikachu  o  /Pokemon/Details/25
+        // GET 
         public async Task<IActionResult> Details(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -67,7 +67,7 @@ namespace PokeApiWebApp.Controllers
                 var model = new PokemonDetailViewModel
                 {
                     Pokemon = pokemon,
-                    // Tomamos la última descripción disponible en español
+                    // descripcion
                     Description = species?.FlavorTextEntries
                         .LastOrDefault(f => f.Language.Name == "es")?.FlavorText
                         .Replace('\n', ' ').Replace('\f', ' '),
@@ -83,7 +83,7 @@ namespace PokeApiWebApp.Controllers
             }
         }
 
-        // GET /Pokemon/Search?query=charizard
+        // GET 
         public IActionResult Search(string query)
         {
             if (string.IsNullOrWhiteSpace(query))
