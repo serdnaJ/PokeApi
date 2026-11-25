@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="p-5 mb-4 bg-light rounded-3">
+    <h1 class="display-5 fw-bold">Consumo de la PokéAPI</h1>
+    <p class="col-md-9 fs-5">
+        Esta aplicación ASP.NET Core MVC realiza solicitudes HTTP a la API pública
+        <a href="https://pokeapi.co" target="_blank" rel="noopener">pokeapi.co</a>,
+        convierte las respuestas JSON en objetos C# y muestra los datos en pantalla.
+    </p>
+    <a class="btn btn-danger btn-lg" asp-controller="Pokemon" asp-action="Index">Ver lista de Pokémon</a>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <h4>1. Solicitud HTTP</h4>
+        <p><code>PokeApiService</code> usa <code>HttpClient</code> para hacer peticiones
+           <code>GET</code> a <code>/pokemon</code> y <code>/pokemon/{id}</code>.</p>
+    </div>
+    <div class="col-md-4">
+        <h4>2. Procesar la respuesta</h4>
+        <p>Se valida el código de estado y el JSON se deserializa con
+           <code>System.Text.Json</code> en las clases de la carpeta <code>Models</code>.</p>
+    </div>
+    <div class="col-md-4">
+        <h4>3. Mostrar los datos</h4>
+        <p><code>PokemonController</code> arma un ViewModel y las vistas Razor
+           lo presentan como tarjetas, tablas y barras de estadísticas.</p>
+    </div>
+</div>

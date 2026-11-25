@@ -1,0 +1,10 @@
+@{
+    ViewData["Title"] = "No encontrado";
+}
+
+<div class="text-center py-5">
+    <h2>No se encontró ningún Pokémon</h2>
+    <p class="lead">La API respondió <strong>404</strong> para «@ViewBag.Query».</p>
+    <p>Prueba con un nombre en inglés (por ejemplo <em>pikachu</em>, <em>charizard</em>) o con un número.</p>
+    <a class="btn btn-danger" asp-action="Index">Ver la lista completa</a>
+</div>

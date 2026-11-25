@@ -1,0 +1,95 @@
+@model PokemonDetailViewModel
+@{
+    var p = Model.Pokemon;
+    var nombre = PokemonTranslations.DisplayName(p.Name);
+    ViewData["Title"] = nombre;
+    const int maxStat = 255; // valor base máximo posible en los juegos
+}
+
+<a class="btn btn-outline-secondary btn-sm mb-3" asp-action="Index">← Volver a la lista</a>
+
+<div class="row g-4">
+    <div class="col-md-5 text-center">
+        <div class="bg-light rounded-4 p-4">
+            <img src="@Model.ImageUrl" alt="@nombre" class="img-fluid detail-img" />
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <div class="text-muted">#@p.Id.ToString("D4")</div>
+        <h1 class="fw-bold">@nombre</h1>
+        @if (!string.IsNullOrEmpty(Model.Genus))
+        {
+            <p class="text-muted fst-italic mb-2">@Model.Genus</p>
+        }
+
+        <div class="mb-3">
+            @foreach (var t in p.Types.OrderBy(t => t.Slot))
+            {
+                <span class="badge type-badge me-1" style="background-color:@PokemonTranslations.TypeColor(t.Type.Name)">
+                    @PokemonTranslations.TypeName(t.Type.Name)
+                </span>
+            }
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.Description))
+        {
+            <p class="lead">@Model.Description</p>
+        }
+
+        <table class="table table-sm w-auto">
+            <tbody>
+                <tr><th scope="row">Altura</th><td>@Model.HeightInMeters.ToString("0.0") m</td></tr>
+                <tr><th scope="row">Peso</th><td>@Model.WeightInKg.ToString("0.0") kg</td></tr>
+                <tr><th scope="row">Experiencia base</th><td>@(p.BaseExperience?.ToString() ?? "—")</td></tr>
+                <tr>
+                    <th scope="row">Habilidades</th>
+                    <td>
+                        @foreach (var a in p.Abilities)
+                        {
+                            <div>
+                                @PokemonTranslations.DisplayName(a.Ability.Name)
+                                @if (a.IsHidden)
+                                {
+                                    <span class="badge text-bg-secondary">oculta</span>
+                                }
+                            </div>
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4 class="mt-4">Estadísticas base</h4>
+        @foreach (var s in p.Stats)
+        {
+            var porcentaje = Math.Min(100, s.BaseStat * 100 / maxStat);
+            <div class="row align-items-center mb-1">
+                <div class="col-4 col-sm-3 small fw-semibold">@PokemonTranslations.StatName(s.Stat.Name)</div>
+                <div class="col-2 col-sm-1 small text-end">@s.BaseStat</div>
+                <div class="col">
+                    <div class="progress" role="progressbar" aria-valuenow="@s.BaseStat" aria-valuemin="0" aria-valuemax="@maxStat">
+                        <div class="progress-bar @(s.BaseStat >= 100 ? "bg-success" : s.BaseStat >= 60 ? "bg-warning" : "bg-danger")"
+                             style="width:@porcentaje%"></div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row mt-2">
+            <div class="col-4 col-sm-3 small fw-bold">Total</div>
+            <div class="col-2 col-sm-1 small fw-bold text-end">@p.Stats.Sum(s => s.BaseStat)</div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between mt-5">
+    @if (p.Id > 1)
+    {
+        <a class="btn btn-outline-danger" asp-action="Details" asp-route-id="@(p.Id - 1)">← #@((p.Id - 1).ToString("D4"))</a>
+    }
+    else
+    {
+        <span></span>
+    }
+    <a class="btn btn-outline-danger" asp-action="Details" asp-route-id="@(p.Id + 1)">#@((p.Id + 1).ToString("D4")) →</a>
+</div>

@@ -1,0 +1,39 @@
+@model PokemonListViewModel
+@{
+    ViewData["Title"] = "Lista de Pokémon";
+    const string spriteBase = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+}
+
+<div class="d-flex justify-content-between align-items-end mb-3">
+    <h2 class="mb-0">Lista de Pokémon</h2>
+    <span class="text-muted">@Model.TotalCount Pokémon · página @Model.CurrentPage de @Model.TotalPages</span>
+</div>
+
+<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3">
+    @foreach (var p in Model.Pokemons)
+    {
+        <div class="col">
+            <a class="card h-100 text-center text-decoration-none poke-card"
+               asp-action="Details" asp-route-id="@p.Name">
+                <img class="card-img-top p-3" loading="lazy"
+                     src="@(spriteBase + p.Id + ".png")" alt="@p.Name" />
+                <div class="card-body pt-0">
+                    <div class="text-muted small">#@p.Id.ToString("D4")</div>
+                    <div class="fw-semibold text-dark">@PokemonTranslations.DisplayName(p.Name)</div>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+
+<nav class="mt-4" aria-label="Paginación">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(Model.HasPrevious ? "" : "disabled")">
+            <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage - 1)">« Anterior</a>
+        </li>
+        <li class="page-item active"><span class="page-link">@Model.CurrentPage</span></li>
+        <li class="page-item @(Model.HasNext ? "" : "disabled")">
+            <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage + 1)">Siguiente »</a>
+        </li>
+    </ul>
+</nav>
